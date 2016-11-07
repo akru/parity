@@ -9,9 +9,10 @@
 !define COMPANYNAME "Ethcore"
 !define DESCRIPTION "Fast, light, robust Ethereum implementation"
 !define VERSIONMAJOR 1
-!define VERSIONMINOR 4
+!define VERSIONMINOR 5
 !define VERSIONBUILD 0
-!define ARGS "--warp --mode=passive"
+!define ARGS "--warp"
+!define FIRST_START_ARGS "--warp --mode=passive"
 
 !addplugindir .\
 
@@ -98,7 +99,8 @@ section "install"
 
 	# Start Menu
 	createDirectory "$SMPROGRAMS\${COMPANYNAME}"
-	createShortCut "$SMPROGRAMS\${COMPANYNAME}\${APPNAME}.lnk" "$INSTDIR\parity.exe" "ui" "$INSTDIR\logo.ico"
+	createShortCut "$SMPROGRAMS\${COMPANYNAME}\${APPNAME} Ethereum.lnk" "$INSTDIR\ptray.exe" "ui" "$INSTDIR\logo.ico"
+	createShortCut "$DESKTOP\${APPNAME} Ethereum.lnk" "$INSTDIR\ptray.exe" "ui" "$INSTDIR\logo.ico"
 
 	# Firewall remove rules if exists
 	SimpleFC::AdvRemoveRule "Parity incoming peers (TCP:30303)"
@@ -132,7 +134,7 @@ section "install"
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "EstimatedSize" ${INSTALLSIZE}
 
 	WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Run" ${APPNAME} "$INSTDIR\ptray.exe ${ARGS}"
-	ExecShell "" "$INSTDIR\ptray.exe" "${ARGS}"
+	ExecShell "" "$INSTDIR\ptray.exe" "${FIRST_START_ARGS}"
 sectionEnd
 
 # Uninstaller

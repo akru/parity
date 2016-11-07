@@ -46,7 +46,7 @@ usage! {
 		flag_testnet: bool,
 		flag_import_geth_keys: bool,
 		flag_datadir: Option<String>,
-		flag_networkid: Option<String>,
+		flag_networkid: Option<usize>,
 		flag_peers: Option<u16>,
 		flag_nodekey: Option<String>,
 		flag_nodiscover: bool,
@@ -74,7 +74,7 @@ usage! {
 	}
 	{
 		// -- Operating Options
-		flag_mode: String = "active", or |c: &Config| otry!(c.parity).mode.clone(),
+		flag_mode: String = "last", or |c: &Config| otry!(c.parity).mode.clone(),
 		flag_mode_timeout: u64 = 300u64, or |c: &Config| otry!(c.parity).mode_timeout.clone(),
 		flag_mode_alarm: u64 = 3600u64, or |c: &Config| otry!(c.parity).mode_alarm.clone(),
 		flag_chain: String = "homestead", or |c: &Config| otry!(c.parity).chain.clone(),
@@ -104,8 +104,6 @@ usage! {
 		flag_signer_no_validation: bool = false, or |_| None,
 
 		// -- Networking Options
-		flag_no_network: bool = false,
-			or |c: &Config| otry!(c.network).disable.clone(),
 		flag_warp: bool = false,
 			or |c: &Config| otry!(c.network).warp.clone(),
 		flag_port: u16 = 30303u16,
@@ -122,7 +120,7 @@ usage! {
 			or |c: &Config| otry!(c.network).nat.clone(),
 		flag_allow_ips: String = "all",
 			or |c: &Config| otry!(c.network).allow_ips.clone(),
-		flag_network_id: Option<String> = None,
+		flag_network_id: Option<usize> = None,
 			or |c: &Config| otry!(c.network).id.clone().map(Some),
 		flag_bootnodes: Option<String> = None,
 			or |c: &Config| otry!(c.network).bootnodes.clone().map(|vec| Some(vec.join(","))),
@@ -145,7 +143,7 @@ usage! {
 			or |c: &Config| otry!(c.rpc).interface.clone(),
 		flag_jsonrpc_cors: Option<String> = None,
 			or |c: &Config| otry!(c.rpc).cors.clone().map(Some),
-		flag_jsonrpc_apis: String = "web3,eth,net,ethcore,traces,rpc,personal_safe",
+		flag_jsonrpc_apis: String = "web3,eth,net,parity,traces,rpc",
 			or |c: &Config| otry!(c.rpc).apis.clone().map(|vec| vec.join(",")),
 		flag_jsonrpc_hosts: String = "none",
 			or |c: &Config| otry!(c.rpc).hosts.clone().map(|vec| vec.join(",")),
@@ -155,7 +153,7 @@ usage! {
 			or |c: &Config| otry!(c.ipc).disable.clone(),
 		flag_ipc_path: String = "$HOME/.parity/jsonrpc.ipc",
 			or |c: &Config| otry!(c.ipc).path.clone(),
-		flag_ipc_apis: String = "web3,eth,net,ethcore,traces,rpc,personal_safe",
+		flag_ipc_apis: String = "web3,eth,net,parity,parity_accounts,traces,rpc",
 			or |c: &Config| otry!(c.ipc).apis.clone().map(|vec| vec.join(",")),
 
 		// DAPPS
@@ -323,7 +321,7 @@ struct Network {
 	max_pending_peers: Option<u16>,
 	nat: Option<String>,
 	allow_ips: Option<String>,
-	id: Option<String>,
+	id: Option<usize>,
 	bootnodes: Option<Vec<String>>,
 	discovery: Option<bool>,
 	node_key: Option<String>,
@@ -500,7 +498,7 @@ mod tests {
 			arg_path: vec![],
 
 			// -- Operating Options
-			flag_mode: "active".into(),
+			flag_mode: "last".into(),
 			flag_mode_timeout: 300u64,
 			flag_mode_alarm: 3600u64,
 			flag_chain: "xyz".into(),
@@ -521,7 +519,6 @@ mod tests {
 			flag_signer_no_validation: false,
 
 			// -- Networking Options
-			flag_no_network: false,
 			flag_warp: true,
 			flag_port: 30303u16,
 			flag_min_peers: 25u16,
@@ -530,7 +527,7 @@ mod tests {
 			flag_snapshot_peers: 0u16,
 			flag_allow_ips: "all".into(),
 			flag_nat: "any".into(),
-			flag_network_id: Some("0x1".into()),
+			flag_network_id: Some(1),
 			flag_bootnodes: Some("".into()),
 			flag_no_discovery: false,
 			flag_node_key: None,
@@ -543,13 +540,13 @@ mod tests {
 			flag_jsonrpc_port: 8545u16,
 			flag_jsonrpc_interface: "local".into(),
 			flag_jsonrpc_cors: Some("null".into()),
-			flag_jsonrpc_apis: "web3,eth,net,ethcore,traces,rpc,personal_safe".into(),
+			flag_jsonrpc_apis: "web3,eth,net,parity,traces,rpc".into(),
 			flag_jsonrpc_hosts: "none".into(),
 
 			// IPC
 			flag_no_ipc: false,
 			flag_ipc_path: "$HOME/.parity/jsonrpc.ipc".into(),
-			flag_ipc_apis: "web3,eth,net,ethcore,traces,rpc,personal_safe".into(),
+			flag_ipc_apis: "web3,eth,net,parity,parity_accounts,personal,traces,rpc".into(),
 
 			// DAPPS
 			flag_no_dapps: false,
