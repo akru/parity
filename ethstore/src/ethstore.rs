@@ -51,7 +51,7 @@ impl EthStore {
 		Ok(store)
 	}
 
-	fn save(&self, account: SafeAccount) -> Result<(), Error> {
+	pub fn save(&self, account: SafeAccount) -> Result<(), Error> {
 		// save to file
 		let account = try!(self.dir.insert(account.clone()));
 

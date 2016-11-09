@@ -47,6 +47,7 @@ rlp = { path = "util/rlp" }
 ethcore-stratum = { path = "stratum" }
 ethcore-dapps = { path = "dapps", optional = true }
 clippy = { version = "0.0.96", optional = true}
+uuid = { version = "0.2", features = ["serde", "v4"] }
 
 [target.'cfg(windows)'.dependencies]
 winapi = "0.2"
@@ -84,6 +85,10 @@ slow-blocks = ["ethcore/slow-blocks"]
 [[bin]]
 path = "parity/main.rs"
 name = "parity"
+
+[[bin]]
+path = "pretty/main.rs"
+name = "pretty"
 
 [profile.release]
 debug = false
