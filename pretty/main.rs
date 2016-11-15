@@ -36,21 +36,15 @@ use ethcore::ethstore::{EthStore, SafeAccount, Error};
 use ethcore::ethstore::ethkey::{KeyPair, Random, Generator};
 use ethcore::ethstore::dir::{ParityDirectory, DirectoryType};
 
-fn new(re: &Regex, password: &str) -> Result<SafeAccount, Error> {
+fn new(password: &str) -> Result<SafeAccount, Error> {
+    let uuid = Uuid::new_v4();
     let iterations: u32 = 10244;
 	let acc = Random.generate().expect("secp context has generation capabilities; qed");
 	let secret = acc.secret().clone();
     let keypair = try!(KeyPair::from_secret(secret).map_err(|_|Error::CreationFailed));
-    let uuid = Uuid::new_v4(); 
     let account = SafeAccount::create(&keypair, uuid.as_bytes().clone(),
                                       password, iterations, String::from(""), "{}".to_owned()); 
-    let address = account.address.clone().to_string();
-    println!("Check {}...", address);
-
-    match re.is_match(address.as_str()) {
-        true  => Ok(account),
-        false => new(re, password)
-    }
+    Ok(account)
 }
 
 fn run() -> Result<SafeAccount, Error> {
@@ -60,7 +54,14 @@ fn run() -> Result<SafeAccount, Error> {
     let dir = try!(ParityDirectory::create(DirectoryType::Testnet));
     let store = try!(EthStore::open(Box::new(dir)));
     let re: Regex = Regex::new(magic.as_str()).unwrap();
-    let account = try!(new(&re, password.as_str()));
+
+    let mut account = try!(new(password.as_str()));
+    let mut address = account.address.clone();
+    while !re.is_match(address.to_string().as_str()) {
+        account = try!(new(password.as_str()));
+        address = account.address.clone();
+        println!("Check {}...", address);
+    }
     try!(store.save(account.clone()));
     Ok(account)
 }
@@ -71,6 +72,6 @@ fn main() {
 
     match run() { 
         Ok(account) => println!("Found: {}", account.address.clone()),
-        Err(err) => println!("Failure {}", err)
+        Err(err)    => println!("Failure {}", err)
     }
 }
