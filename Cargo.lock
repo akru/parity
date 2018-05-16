@@ -1775,7 +1775,7 @@ name = "multihash"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "ring 0.12.1 (git+https://github.com/paritytech/ring)",
+ "ring 0.12.1 (git+https://github.com/akru/ring)",
  "tiny-keccak 1.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -2381,7 +2381,7 @@ dependencies = [
  "ordered-float 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "parking_lot 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "ring 0.12.1 (git+https://github.com/paritytech/ring)",
+ "ring 0.12.1 (git+https://github.com/akru/ring)",
  "rlp 0.2.1",
  "serde 1.0.37 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.37 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2740,7 +2740,7 @@ dependencies = [
 [[package]]
 name = "ring"
 version = "0.12.1"
-source = "git+https://github.com/paritytech/ring#b98d7f586c0467d68e9946a5f47b4a04b9a86b4a"
+source = "git+https://github.com/akru/ring#ad48bd6973b43f6716fe3c69c806f4eab877c8f9"
 dependencies = [
  "cc 1.0.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2868,7 +2868,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "base64 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.9 (registry+https://github.com/rust-lang/crates.io-index)",
- "ring 0.12.1 (git+https://github.com/paritytech/ring)",
+ "ring 0.12.1 (git+https://github.com/akru/ring)",
  "sct 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "untrusted 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "webpki 0.17.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2894,7 +2894,7 @@ name = "sct"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "ring 0.12.1 (git+https://github.com/paritytech/ring)",
+ "ring 0.12.1 (git+https://github.com/akru/ring)",
  "untrusted 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -3660,7 +3660,7 @@ name = "webpki"
 version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "ring 0.12.1 (git+https://github.com/paritytech/ring)",
+ "ring 0.12.1 (git+https://github.com/akru/ring)",
  "untrusted 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -3959,7 +3959,7 @@ dependencies = [
 "checksum regex 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)" = "744554e01ccbd98fff8c457c3b092cd67af62a555a43bfe97ae8a0451f7799fa"
 "checksum regex-syntax 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)" = "ad890a5eef7953f55427c50575c680c42841653abd2b028b68cd223d157f62db"
 "checksum relay 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "1576e382688d7e9deecea24417e350d3062d97e32e45d70b1cde65994ff1489a"
-"checksum ring 0.12.1 (git+https://github.com/paritytech/ring)" = "<none>"
+"checksum ring 0.12.1 (git+https://github.com/akru/ring)" = "<none>"
 "checksum rocksdb 0.4.5 (git+https://github.com/paritytech/rust-rocksdb)" = "<none>"
 "checksum rocksdb-sys 0.3.0 (git+https://github.com/paritytech/rust-rocksdb)" = "<none>"
 "checksum rpassword 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b273c91bd242ca03ad6d71c143b6f17a48790e61f21a6c78568fa2b6774a24a4"
